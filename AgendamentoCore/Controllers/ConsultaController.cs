@@ -84,7 +84,15 @@ namespace AgendamentoCore.Controllers
             var consulta = _context.Consultas.Where(x => x.ConsultaId == id).FirstOrDefault();
             _context.Consultas.Remove(consulta);
             _context.SaveChanges();
-            return Ok();
+            
+            if (consulta == null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

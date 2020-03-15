@@ -23,7 +23,15 @@ namespace AgendamentoCore.Controllers
         [HttpGet]
         public IActionResult ListaMedico()
         {
-            return Ok(_context.Medicos.ToList());
+            var medicos = _context.Medicos.ToList();
+            if (medicos == null || !medicos.Any()) 
+            {
+                return NotFound("Não existem medicos cadastrados.");
+            }
+            else
+            {
+                return Ok(medicos);
+            }
         }
 
         [HttpPost]
@@ -41,15 +49,24 @@ namespace AgendamentoCore.Controllers
             var ret = _context.Medicos.Update(medico);
             _context.SaveChanges();
             return Ok(ret.Entity);
+
+
         }
 
         [HttpDelete]
         public IActionResult DeletarMedico(int id)
         {
             var medico = _context.Medicos.Where(x => x.MedicoId == id).FirstOrDefault();
-            _context.Medicos.Remove(medico);
-            _context.SaveChanges();
-            return Ok();
+            if (medico == null)
+            {
+                return BadRequest();
+            }
+            else
+            {              
+                _context.Medicos.Remove(medico);
+                _context.SaveChanges();
+                return Ok();
+            }
         }
 
 

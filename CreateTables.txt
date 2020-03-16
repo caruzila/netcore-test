@@ -1,0 +1,16 @@
+CREATE TABLE Medico (
+    MedicoId int IDENTITY(1,1) PRIMARY KEY,
+    MedicoNome varchar(255),
+    MedicoCrm varchar(255)
+);
+
+CREATE TABLE Paciente (
+	PacienteId int IDENTITY(1,1) PRIMARY KEY,
+	PacienteNome varchar(255)
+);
+
+CREATE TABLE Consulta (
+	ConsultaId int IDENTITY(1,1) PRIMARY KEY,
+	ConsultaData datetime,
+	MedicoId int FOREIGN KEY REFERENCES Medico(MedicoId),
+	PacienteId int FOREIGN KEY REFERENCES Paciente(PacienteId)
